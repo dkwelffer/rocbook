@@ -1,0 +1,8 @@
+*__pycache__/
+*.sqlite3
+media/*
+.vscode/
+static/sources/
+static/node_modules/
+*.tar.gz
+*.rar
