@@ -1,0 +1,51 @@
+{% extends '../base.html' %}
+
+{% block title %}Busqueda{% endblock %}
+
+{% block content %}
+<div class="main-content">
+	<section class="section">
+		<div class="section-header">
+			<h1>Busqueda</h1>
+		</div>
+
+		<div class="section-body">
+			{% if resultados %}
+				{% regroup resultados by libro as libros %}
+		        {% for libro in libros %}
+		        	<div class="card col-12 col-md-6 col-lg-6">
+		        		<div class="card-header">
+		        			<h4>{{ libro.grouper }}</h4>
+		        		</div>
+		        		<div class="card-body">
+							<ul>
+							{% for pagina in libro.list %}
+								<li>
+									<a href="{% url 'libros:pagina' pagina.isbn pagina.pagina %}">
+										Pagina {{ pagina.pagina }}
+									</a>
+								</li>
+							{% endfor %}
+							</ul>
+		        		</div>
+		        	</div>
+		        {% endfor %}
+			{% else %}
+				<div class="card">
+	        		<div class="card-header">
+	        			<h4>Sin resultados</h4>
+	        		</div>
+	        		<div class="card-body">
+	        			No existen textos con el término que está buscando.
+	        		</div>
+	        		<div class="card-footer text-center">
+	        			<a href="{% url 'principal:index' %}" class="btn btn-icon btn-primary">
+	                        <i class="fas fa-home"></i> Ir a inicio
+	                    </a>
+	        		</div>
+	        	</div>
+	        {% endif %}
+        </div> 
+    </section>
+</div>
+{% endblock %}

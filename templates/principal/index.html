@@ -1,0 +1,35 @@
+{% extends '../base.html' %}
+
+{% block title %}INICIO{% endblock %}
+
+{% block content %}
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+            <h1>Inicio</h1>
+        </div>
+
+        <div class="section-body">
+            <h2 class="section-title">Bienvenido a ROCBOOK</h2>
+            <p class="section-lead">Una plataforma web para la automatización de la transcripción de 
+                libros impresos usando Inteligencia Artificial</p>
+            <div class="card">
+                <div class="card-header">
+                    <h4>Instrucciones</h4>
+                </div>
+                <div class="card-body">
+                    <h6>Libros</h6>
+                    <p>Use la opcion 'Libros' en la barra lateral de la izquierda para visualizar los libros
+                        disponibles y por procesar en el sistema.
+                    </p>
+                    <h6>ROC</h6>
+                    <p>Use el menu 'ROC' para ejecutar reconocimiento optico de caracteres de manera rapida
+                        sobre una imagen, o para subir lotes de imagenes para ser procesadas en forma de libros
+                        enteros.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div> 
+{% endblock %}

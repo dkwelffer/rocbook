@@ -1,0 +1,50 @@
+{% extends '../base.html' %}
+{% block title %}Escaneo rapido{% endblock %}
+
+{% block content %}
+
+<div class="main-content">
+	<section class="section">
+		<div class="section-header">
+			<h1>Procesamiento simple</h1>
+		</div>
+
+		<div class="section-body">
+			{% if error %}
+
+				<div class="alert alert-danger">
+					<div class="alert-title">Error</div>
+					{{ error }}
+				</div>
+			{% endif %}
+			<div class="card">
+				<div class="card-header">
+					{% if resultado %}
+						<h4>Resultado</h4>
+					{% else %}
+						<h4>Procesar imagen</h4>
+					{% endif %}
+				</div>
+				<div class="card-body">
+					{% if resultado %}
+						<p>{{ resultado|linebreaks }}</p>
+						<a href="{% url 'ocr:rapido' %}">
+							<button class="btn btn-primary mr-1" type="button">Procesar otra imagen</button>
+						</a>
+					{% else %}
+						<form enctype="multipart/form-data" action="{% url 'ocr:rapido' %}" method="POST">
+							{% csrf_token %}
+							<div class="form-group">
+								<label>Imagen a procesar</label>
+								<input name="imagen" type="file" accept="image/*" required/>
+							</div>
+							<button class="btn btn-primary mr-1" type="submit">Enviar</button>
+						</form>
+					{% endif %}					
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends '../base.html' %}
+
+{% block title %}{{ libro.titulo }} - Pagina {{ pagina.numero }}{% endblock %}
+
+{% block content %}
+
+<div class="main-content">
+	<section class="section">
+		<div class="section-header">
+            <h1>Vista de libro</h1>
+            <div class="section-header-breadcrumb text-dark-all">
+                <div class="breadcrumb-item">
+                    <a href="{% url 'libros:editar_pagina' libro.isbn pagina.numero %}">
+                        <i class="fas fa-edit"></i> Editar
+                    </a>
+                </div>
+                <div class="breadcrumb-item">
+                    <a href="{% url 'libros:libro' libro.isbn %}">
+                        <i class="fas fa-undo"></i> Volver
+                    </a>
+                </div>
+            </div>
+		</div>
+
+		<div class="section-body">
+            {% if actualizo %}
+                <div class="alert alert-success alert-dismissible show fade">
+                    <div class="alert-body">
+                        <button class="close" data-dismiss="alert"><span>×</span></button>
+                        La página se ha actualizado correctamente. 
+                    </div>
+                </div>
+            {% endif %}
+			<div class="card">
+                <div class="card-header">
+                    <h4>{{libro.titulo}} - pagina {{pagina.numero}}</h4>
+                </div>
+                <div class="card-body">
+                    {% autoescape off %}
+                        {{ pagina.texto|linebreaks }}
+                    {% endautoescape %}
+                </div>
+                <div class="card-footer">
+                    <nav aria-label="...">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item {% if not pagina.anterior %}disabled{% endif %}">
+                                <a class="page-link" href="{% if pagina.anterior %}{% url 'libros:pagina' libro.isbn pagina.anterior %}{% else %}#{% endif %}" tabindex="-1">Anterior</a>
+                            </li>
+
+                            {% for numero in pagina.navegacion %}
+                                {% if numero == pagina.numero %}
+                                <li class="page-item active">
+                                    <a class="page-link" href="{% url 'libros:pagina' libro.isbn numero %}">{{ numero }}<span class="sr-only">(current)</span></a>
+                                </li>
+                                {% else %}
+                                <li class="page-item"><a class="page-link" href="{% url 'libros:pagina' libro.isbn numero %}">{{ numero }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                            <li class="page-item {% if not pagina.siguiente %}disabled{% endif %}">
+                                <a class="page-link" href="{% if pagina.siguiente %}{% url 'libros:pagina' libro.isbn pagina.siguiente %}{% else %}#{% endif %}">Siguiente</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}

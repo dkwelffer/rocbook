@@ -1,0 +1,53 @@
+{% extends '../base.html' %}
+
+{% load static %}
+
+{% block title %}{{ libro.titulo }} - Editar pagina {{ pagina.numero }}{% endblock %}
+
+{% block additionalcss %}
+<link rel="stylesheet" href="{% static 'assets/modules/summernote/summernote-bs4.css' %}">
+<link rel="stylesheet" href="{% static 'assets/modules/jquery-selectric/selectric.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="main-content">
+	<section class="section">
+		<div class="section-header">
+			<h1>Editar pagina</h1>
+		</div>
+
+		<div class="section-body">
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<h4>{{ libro.titulo }} | pagina {{ pagina.numero }}</h4>
+						</div>
+						<form method="POST" action="{% url 'libros:editar_pagina' libro.isbn pagina.numero %}">
+							{% csrf_token %}
+							<div class="card-body">
+								<textarea name="texto_pagina" class="summernote-simple">
+									{{ pagina.texto|linebreaks }}
+								</textarea>
+							</div>
+							<div class="card-footer text-right">
+								<button type="submit" class="btn btn-icon btn-primary">
+								<i class="fas fa-check"></i> Actualizar
+								</button>
+								<a href="{% url 'libros:pagina' libro.isbn pagina.numero %}" class="btn btn-icon btn-warning">
+									<i class="fas fa-undo"></i> Cancelar
+								</a>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+{% endblock %}
+
+{% block additionaljs %}
+<script src="{% static 'assets/modules/summernote/summernote-bs4.js' %}"></script>
+<script src="{% static 'assets/modules/jquery-selectric/jquery.selectric.min.js' %}"></script>
+{% endblock %}

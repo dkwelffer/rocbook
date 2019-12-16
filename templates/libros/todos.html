@@ -1,0 +1,99 @@
+{% extends '../base.html' %}
+{% load static %}
+{% block additionalcss %}
+
+<link rel="stylesheet" href="{% static 'assets/modules/datatables/datatables.min.css' %}">
+<link rel="stylesheet"
+    href="{% static 'assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="{% static 'assets/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css' %}">
+{% endblock %}
+
+{% block title %}Todos los libros{% endblock %}
+
+{% block content %}
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+            <h1>Libros</h1>
+        </div>
+
+        <div class="section-body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <!-- <div class="card-header">
+                            <h4>Libros</h4>
+                        </div> -->
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table data-order='[[ 0, "asc" ]]' class="table table-striped" id="libros-table">
+                                    <thead>
+                                        <tr>
+                                            <!-- <th class="text-center"> -->
+                                            <th>Titulo</th>
+                                            <th>Autor</th>
+                                            <th>Año de publicación</th>
+                                            <th>Abrir</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for libro in libros %}
+                                        <tr>
+                                            <td>{{ libro.titulo }}</td>
+                                            <td>{{ libro.autor }}</td>
+                                            <td>{{ libro.anio }}</td>
+                                            {% if libro.procesado %}
+                                                <td><a href="{% url 'libros:libro' libro.isbn %}" class="btn btn-info btn-sm">Ver libro</a></td>
+                                            {% else %}
+                                                <td><a href="#" class="disabled btn btn-warning btn-sm">Procesando</a></td>
+                                            {% endif %}
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block additionaljs %}
+<script src="{% static 'assets/modules/datatables/datatables.min.js' %}"></script>
+<script src="{% static 'assets/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'assets/modules/datatables/Select-1.2.4/js/dataTables.select.min.js' %}"></script>
+<script>
+    $(document).ready(function () {
+        $('#libros-table').DataTable({
+            "language": {
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}
